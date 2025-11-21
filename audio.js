@@ -7,18 +7,35 @@ class AudioEngine {
         this.masterGain = null;
         this.backgroundLoop = null;
         this.enabled = true;
-        this.init();
+        this.initialized = false;
     }
 
     init() {
+        if (this.initialized) return;
+
         try {
             this.context = new (window.AudioContext || window.webkitAudioContext)();
             this.masterGain = this.context.createGain();
             this.masterGain.gain.value = 0.3; // Master volume
             this.masterGain.connect(this.context.destination);
+            this.initialized = true;
         } catch (e) {
             console.warn('Web Audio API not supported');
             this.enabled = false;
+        }
+    }
+
+    async resume() {
+        if (!this.context) {
+            this.init();
+        }
+
+        if (this.context && this.context.state === 'suspended') {
+            try {
+                await this.context.resume();
+            } catch (e) {
+                console.warn('Could not resume AudioContext', e);
+            }
         }
     }
 
@@ -27,6 +44,8 @@ class AudioEngine {
     // Whoosh sound for transitions
     playWhoosh() {
         if (!this.enabled) return;
+        if (!this.context) this.init();
+        if (!this.context) return;
 
         const now = this.context.currentTime;
         const oscillator = this.context.createOscillator();
@@ -55,6 +74,8 @@ class AudioEngine {
     // Pop sound for icons appearing
     playPop() {
         if (!this.enabled) return;
+        if (!this.context) this.init();
+        if (!this.context) return;
 
         const now = this.context.currentTime;
         const oscillator = this.context.createOscillator();
@@ -77,6 +98,8 @@ class AudioEngine {
     // Rise sound for cards sliding in
     playRise() {
         if (!this.enabled) return;
+        if (!this.context) this.init();
+        if (!this.context) return;
 
         const now = this.context.currentTime;
         const oscillator = this.context.createOscillator();
@@ -99,6 +122,8 @@ class AudioEngine {
     // Sparkle sound for creative effects
     playSparkle() {
         if (!this.enabled) return;
+        if (!this.context) this.init();
+        if (!this.context) return;
 
         const now = this.context.currentTime;
         const oscillator = this.context.createOscillator();
@@ -121,6 +146,8 @@ class AudioEngine {
     // Success chime for conclusion
     playSuccess() {
         if (!this.enabled) return;
+        if (!this.context) this.init();
+        if (!this.context) return;
 
         const now = this.context.currentTime;
         const frequencies = [523.25, 659.25, 783.99]; // C, E, G major chord
