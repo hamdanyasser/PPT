@@ -138,15 +138,22 @@ class ParticleSystem {
             // Decay life
             particle.life -= particle.decay;
 
-            // Remove dead particles
-            return particle.life > 0;
+            // Remove particles that are off-screen or dead for performance
+            const isAlive = particle.life > 0;
+            const isOnScreen = particle.x > -50 && particle.x < this.canvas.width + 50 &&
+                               particle.y > -50 && particle.y < this.canvas.height + 50;
+            return isAlive && isOnScreen;
         });
     }
 
     render() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Batch rendering for better performance
         this.particles.forEach(particle => {
+            // Skip particles that are too faded
+            if (particle.life < 0.05) return;
+
             this.ctx.save();
 
             // Set opacity based on life
@@ -165,9 +172,9 @@ class ParticleSystem {
                 this.ctx.fillStyle = particle.color;
                 this.ctx.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size * 2);
             } else if (particle.type === 'sparkle') {
-                // Draw star shape
+                // Draw simplified star shape
                 this.ctx.fillStyle = particle.color;
-                this.ctx.shadowBlur = 10;
+                this.ctx.shadowBlur = 6;
                 this.ctx.shadowColor = particle.color;
                 this.ctx.beginPath();
                 for (let i = 0; i < 5; i++) {

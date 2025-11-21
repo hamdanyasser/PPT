@@ -35,21 +35,21 @@ class AudioEngine {
 
         oscillator.type = 'sawtooth';
         oscillator.frequency.setValueAtTime(800, now);
-        oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.5);
+        oscillator.frequency.exponentialRampToValueAtTime(100, now + 0.3);
 
         filter.type = 'lowpass';
         filter.frequency.setValueAtTime(2000, now);
-        filter.frequency.exponentialRampToValueAtTime(200, now + 0.5);
+        filter.frequency.exponentialRampToValueAtTime(200, now + 0.3);
 
-        gainNode.gain.setValueAtTime(0.4, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        gainNode.gain.setValueAtTime(0.2, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
 
         oscillator.connect(filter);
         filter.connect(gainNode);
         gainNode.connect(this.masterGain);
 
         oscillator.start(now);
-        oscillator.stop(now + 0.5);
+        oscillator.stop(now + 0.3);
     }
 
     // Pop sound for icons appearing
@@ -62,16 +62,16 @@ class AudioEngine {
 
         oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(800, now);
-        oscillator.frequency.exponentialRampToValueAtTime(200, now + 0.1);
+        oscillator.frequency.exponentialRampToValueAtTime(200, now + 0.08);
 
-        gainNode.gain.setValueAtTime(0.3, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        gainNode.gain.setValueAtTime(0.15, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
 
         oscillator.connect(gainNode);
         gainNode.connect(this.masterGain);
 
         oscillator.start(now);
-        oscillator.stop(now + 0.1);
+        oscillator.stop(now + 0.08);
     }
 
     // Rise sound for cards sliding in
@@ -84,16 +84,16 @@ class AudioEngine {
 
         oscillator.type = 'triangle';
         oscillator.frequency.setValueAtTime(200, now);
-        oscillator.frequency.exponentialRampToValueAtTime(600, now + 0.3);
+        oscillator.frequency.exponentialRampToValueAtTime(600, now + 0.2);
 
-        gainNode.gain.setValueAtTime(0.2, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        gainNode.gain.setValueAtTime(0.12, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
 
         oscillator.connect(gainNode);
         gainNode.connect(this.masterGain);
 
         oscillator.start(now);
-        oscillator.stop(now + 0.3);
+        oscillator.stop(now + 0.2);
     }
 
     // Sparkle sound for creative effects
@@ -106,16 +106,16 @@ class AudioEngine {
 
         oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(2000, now);
-        oscillator.frequency.exponentialRampToValueAtTime(4000, now + 0.15);
+        oscillator.frequency.exponentialRampToValueAtTime(3500, now + 0.1);
 
-        gainNode.gain.setValueAtTime(0.15, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        gainNode.gain.setValueAtTime(0.08, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
 
         oscillator.connect(gainNode);
         gainNode.connect(this.masterGain);
 
         oscillator.start(now);
-        oscillator.stop(now + 0.15);
+        oscillator.stop(now + 0.1);
     }
 
     // Success chime for conclusion
@@ -132,69 +132,27 @@ class AudioEngine {
             oscillator.type = 'sine';
             oscillator.frequency.setValueAtTime(freq, now);
 
-            gainNode.gain.setValueAtTime(0, now + index * 0.1);
-            gainNode.gain.linearRampToValueAtTime(0.15, now + index * 0.1 + 0.05);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, now + index * 0.1 + 0.8);
+            gainNode.gain.setValueAtTime(0, now + index * 0.08);
+            gainNode.gain.linearRampToValueAtTime(0.1, now + index * 0.08 + 0.04);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, now + index * 0.08 + 0.5);
 
             oscillator.connect(gainNode);
             gainNode.connect(this.masterGain);
 
-            oscillator.start(now + index * 0.1);
-            oscillator.stop(now + index * 0.1 + 0.8);
+            oscillator.start(now + index * 0.08);
+            oscillator.stop(now + index * 0.08 + 0.5);
         });
     }
 
     // =================== BACKGROUND MUSIC ===================
 
     startBackgroundMusic() {
-        if (!this.enabled || this.backgroundLoop) return;
-
-        const playAmbientLoop = () => {
-            if (!this.backgroundLoop) return;
-
-            const now = this.context.currentTime;
-
-            // Create ambient pad sound
-            const oscillator1 = this.context.createOscillator();
-            const oscillator2 = this.context.createOscillator();
-            const gainNode = this.context.createGain();
-            const filter = this.context.createBiquadFilter();
-
-            oscillator1.type = 'sine';
-            oscillator1.frequency.setValueAtTime(220, now); // A3
-            oscillator2.type = 'sine';
-            oscillator2.frequency.setValueAtTime(329.63, now); // E4
-            oscillator2.detune.setValueAtTime(5, now); // Slight detune for richness
-
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, now);
-            filter.Q.setValueAtTime(1, now);
-
-            gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(0.03, now + 1);
-            gainNode.gain.setValueAtTime(0.03, now + 6);
-            gainNode.gain.linearRampToValueAtTime(0, now + 8);
-
-            oscillator1.connect(filter);
-            oscillator2.connect(filter);
-            filter.connect(gainNode);
-            gainNode.connect(this.masterGain);
-
-            oscillator1.start(now);
-            oscillator2.start(now);
-            oscillator1.stop(now + 8);
-            oscillator2.stop(now + 8);
-
-            // Schedule next iteration
-            setTimeout(playAmbientLoop, 7000);
-        };
-
-        this.backgroundLoop = true;
-        playAmbientLoop();
+        // Background music disabled for performance
+        // The sound effects provide enough audio feedback
     }
 
     stopBackgroundMusic() {
-        this.backgroundLoop = false;
+        // No-op
     }
 
     // =================== UTILITY ===================

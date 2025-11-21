@@ -151,57 +151,43 @@ function showSection(index) {
 
         switch(index) {
             case 0: // Title section
-                window.particleSystem.createBurst(centerX, centerY, 40, '#667eea');
+                window.particleSystem.createBurst(centerX, centerY, 20, '#667eea');
                 if (window.audioEngine) {
                     setTimeout(() => window.audioEngine.playPop(), 200);
-                    setTimeout(() => window.audioEngine.playPop(), 400);
                 }
                 break;
 
             case 1: // Processing speed
-                window.particleSystem.createRain(30);
+                window.particleSystem.createRain(15);
                 setTimeout(() => {
                     if (window.audioEngine) window.audioEngine.playRise();
                 }, 400);
-                setTimeout(() => {
-                    if (window.audioEngine) window.audioEngine.playRise();
-                }, 600);
                 break;
 
             case 2: // Creativity
-                window.particleSystem.createSparkles(centerX, centerY - 100, 20);
+                window.particleSystem.createSparkles(centerX, centerY - 100, 12);
                 setTimeout(() => {
                     if (window.audioEngine) window.audioEngine.playSparkle();
                 }, 300);
-                setTimeout(() => {
-                    window.particleSystem.createSparkles(centerX - 200, centerY, 15);
-                    if (window.audioEngine) window.audioEngine.playSparkle();
-                }, 600);
                 break;
 
             case 3: // Learning
-                window.particleSystem.createFloating(25);
+                window.particleSystem.createFloating(15);
                 setTimeout(() => {
                     if (window.audioEngine) window.audioEngine.playPop();
                 }, 500);
-                setTimeout(() => {
-                    if (window.audioEngine) window.audioEngine.playPop();
-                }, 1000);
-                setTimeout(() => {
-                    if (window.audioEngine) window.audioEngine.playPop();
-                }, 1500);
                 break;
 
             case 4: // Conclusion
                 setTimeout(() => {
-                    window.particleSystem.createConfetti(100);
+                    window.particleSystem.createConfetti(35);
                     if (window.audioEngine) window.audioEngine.playSuccess();
                 }, 300);
                 setTimeout(() => {
-                    window.particleSystem.createBurst(centerX - 200, centerY, 30, '#4facfe');
+                    window.particleSystem.createBurst(centerX - 200, centerY, 15, '#4facfe');
                 }, 600);
                 setTimeout(() => {
-                    window.particleSystem.createBurst(centerX + 200, centerY, 30, '#ff6b6b');
+                    window.particleSystem.createBurst(centerX + 200, centerY, 15, '#ff6b6b');
                 }, 900);
                 break;
         }
