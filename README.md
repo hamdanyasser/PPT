@@ -2,24 +2,25 @@
 
 <div dir="rtl">
 
-## 🧠 نبذة عن المشروع
+## 🎬 نبذة عن المشروع
 
-إنفوجرافيك عربي ثابت على الويب يقارن بين **العقل البشري** و**التكنولوجيا** في عدة جوانب:
+**فيديو إنفوجرافيك تفاعلي** على الويب يقارن بين **العقل البشري** و**التكنولوجيا** في عدة جوانب:
 - ⚡ سرعة المعالجة
 - 💡 الإبداع والتفكير النقدي
 - 🔄 التعلم والتكيف
 
-المشروع مصمم كـ **إنفوجرافيك عمودي** (Vertical Infographic) يشبه ملصق طويل يمكن تصديره كصورة أو PDF لإرساله للعملاء.
+المشروع مصمم كـ **فيديو تلقائي** (Auto-playing Video) مدته 30 ثانية مع تحكم كامل (تشغيل، إيقاف، إعادة، تقديم).
 
 ## ✨ المميزات
 
+- 🎬 **تشغيل تلقائي** مع انتقالات سلسة بين الأقسام
+- ⏯️ **أدوات تحكم فيديو**: تشغيل، إيقاف، إعادة، شريط تقدم
 - 🎨 تصميم عربي بالكامل مع دعم RTL
-- 📜 تخطيط عمودي ثابت يمكن التمرير خلاله
+- 🎭 رسوم متحركة احترافية لكل عنصر
+- ⏱️ مدة الفيديو: 30 ثانية (قابلة للتخصيص)
 - 📱 تصميم متجاوب يعمل على جميع الأجهزة
-- 🎭 رسوم متحركة CSS خفيفة وبسيطة
-- 🖼️ جاهز للتصدير كصورة أو PDF
-- 🚫 لا يتطلب JavaScript (ثابت تمامًا)
-- 🎨 ألوان نظيفة ومريحة للعين
+- 🎯 تجربة مشابهة لفيديو YouTube
+- 🖼️ قابل للتصدير كفيديو باستخدام أدوات تسجيل الشاشة
 
 ## 📂 بنية المشروع
 
@@ -27,8 +28,9 @@
 
 ```
 PPT/
-├── index.html      # الهيكل الأساسي والمحتوى (HTML فقط)
-├── styles.css      # التصاميم والرسوم المتحركة (CSS فقط)
+├── index.html      # الهيكل الأساسي والمحتوى (HTML)
+├── styles.css      # التصاميم والرسوم المتحركة (CSS)
+├── video.js        # منطق التحكم بالفيديو (JavaScript)
 └── README.md       # هذا الملف
 ```
 
@@ -37,9 +39,15 @@ PPT/
 ## 🚀 كيفية التشغيل محليًا
 
 ### 1. **فتح الملف مباشرة**
-ما عليك سوى فتح ملف `index.html` في أي متصفح حديث (Chrome, Firefox, Safari, Edge).
+افتح ملف `index.html` في أي متصفح حديث (Chrome, Firefox, Safari, Edge) وسيبدأ الفيديو تلقائيًا بعد نصف ثانية.
 
-### 2. **استخدام خادم محلي (اختياري)**
+### 2. **أدوات التحكم**
+- **▶️ تشغيل**: لبدء أو استئناف الفيديو
+- **⏸️ إيقاف مؤقت**: لإيقاف الفيديو مؤقتًا
+- **🔄 إعادة**: للعودة إلى البداية
+- **شريط التقدم**: انقر على أي مكان للانتقال إلى ذلك الوقت
+
+### 3. **استخدام خادم محلي (اختياري)**
 إذا كنت تفضل استخدام خادم محلي:
 
 ```bash
@@ -55,41 +63,51 @@ php -S localhost:8000
 
 ثم افتح المتصفح على: `http://localhost:8000`
 
-## 📸 تصدير الإنفوجرافيك كصورة أو PDF
+## 🎥 تصدير الفيديو
 
-### الطريقة 1: لقطة شاشة كاملة (Screenshot)
+### الطريقة 1: تسجيل الشاشة المدمج (أسهل طريقة)
 
-**على Chrome / Edge:**
-1. افتح الملف `index.html` في المتصفح
-2. اضغط `Ctrl+Shift+I` (أو `Cmd+Option+I` على Mac) لفتح أدوات المطور
-3. اضغط `Ctrl+Shift+P` (أو `Cmd+Shift+P` على Mac) لفتح قائمة الأوامر
-4. اكتب: `Capture full size screenshot`
-5. سيتم حفظ صورة كاملة للصفحة تلقائيًا
+**على Windows 10/11:**
+1. افتح `index.html` في المتصفح
+2. اضغط `Win + G` لفتح Game Bar
+3. انقر على زر التسجيل (أو اضغط `Win + Alt + R`)
+4. الفيديو سيتم حفظه في مجلد `Videos/Captures`
 
-**على Firefox:**
-1. افتح الملف `index.html` في المتصفح
-2. اضغط بزر الماوس الأيمن على الصفحة
-3. اختر "التقاط لقطة شاشة" (Take Screenshot)
-4. اختر "حفظ الصفحة الكاملة" (Save Full Page)
+**على Mac:**
+1. افتح `index.html` في المتصفح
+2. اضغط `Cmd + Shift + 5`
+3. اختر "تسجيل الشاشة المحددة"
+4. حدد نافذة المتصفح وابدأ التسجيل
 
-### الطريقة 2: طباعة كـ PDF
+### الطريقة 2: إضافات المتصفح
 
-1. افتح الملف `index.html` في المتصفح
-2. اضغط `Ctrl+P` (أو `Cmd+P` على Mac)
-3. اختر "حفظ كـ PDF" (Save as PDF) من قائمة الطابعات
-4. اضبط الإعدادات:
-   - التخطيط: عمودي (Portrait)
-   - الهوامش: لا شيء (None)
-   - خيارات الخلفية: تفعيل (Enable)
-5. احفظ الملف
+استخدم إضافات مثل:
+- **[Loom](https://www.loom.com/)**: تسجيل عالي الجودة ومشاركة فورية
+- **[Screen Recorder](https://chrome.google.com/webstore/category/extensions)**: إضافة Chrome مجانية
+- **[Screencastify](https://www.screencastify.com/)**: تسجيل احترافي مع تحرير
 
-### الطريقة 3: أدوات خارجية
+### الطريقة 3: أدوات احترافية
 
-استخدم أدوات مثل:
-- [GoFullPage](https://chrome.google.com/webstore/detail/gofullpage) (إضافة Chrome)
-- [Awesome Screenshot](https://www.awesomescreenshot.com/) (إضافة متعددة المتصفحات)
+للحصول على أفضل جودة:
+- **OBS Studio** (مجاني ومفتوح المصدر): [obsproject.com](https://obsproject.com)
+- **Camtasia** (مدفوع): للتسجيل والتحرير الاحترافي
+- **Bandicam**: لتسجيل عالي الجودة
 
-## 🎨 تخصيص الإنفوجرافيك
+### نصائح للتسجيل الأمثل:
+- ✅ استخدم دقة 1920x1080 (Full HD)
+- ✅ أغلق كل البرامج الأخرى لتحسين الأداء
+- ✅ سجل مع صوت إذا أردت إضافة تعليق صوتي
+- ✅ اضبط وضع السطوع الكامل للشاشة
+
+## 🎨 تخصيص الفيديو
+
+### تعديل مدة الفيديو
+افتح ملف `video.js` وعدّل المصفوفة في بداية الملف:
+```javascript
+const SECTION_DURATIONS = [4000, 6000, 6000, 6000, 8000];
+// الأرقام بالميلي ثانية: 1000 = 1 ثانية
+// [القسم 1: 4 ثواني، القسم 2: 6 ثواني، القسم 3: 6 ثواني، القسم 4: 6 ثواني، القسم 5: 8 ثواني]
+```
 
 ### تعديل النصوص
 افتح ملف `index.html` وعدّل المحتوى داخل عناصر `<section>`.
@@ -137,15 +155,17 @@ php -S localhost:8000
 ## 🛠 التقنيات المستخدمة
 
 - **HTML5**: الهيكل والمحتوى
-- **CSS3**: التصاميم والرسوم المتحركة والتخطيط
+- **CSS3**: التصاميم والرسوم المتحركة الاحترافية
+- **Vanilla JavaScript**: منطق التحكم بالفيديو وتزامن الأحداث
 - **Google Fonts (Tajawal)**: خط عربي جميل وواضح
-- **لا يوجد JavaScript**: إنفوجرافيك ثابت بالكامل
+- **لا توجد مكتبات خارجية**: كود نظيف وبسيط
 
 ## 📋 متطلبات النظام
 
-- ✅ متصفح حديث (Chrome, Firefox, Safari, Edge)
-- ✅ لا يتطلب أي مكتبات خارجية
+- ✅ متصفح حديث (Chrome 60+, Firefox 55+, Safari 11+, Edge 79+)
+- ✅ JavaScript مفعّل
 - ✅ يعمل دون اتصال بالإنترنت (بعد التحميل الأول للخط)
+- ✅ دقة شاشة موصى بها: 1920x1080 أو أعلى
 
 ## 🌐 نشر المشروع على الإنترنت
 
@@ -194,13 +214,16 @@ git push -u origin main
 - رسالة ختامية عن التعاون بين الإنسان والآلة
 - أيقونات متحركة خفيفة
 
-## 🤝 الاستخدام مع عملاء غير تقنيين
+## 🤝 حالات الاستخدام
 
-هذا الإنفوجرافيك مثالي لـ:
-- ✅ إرسال صورة PDF للعملاء
-- ✅ عرض تقديمي بسيط
-- ✅ منشور على وسائل التواصل الاجتماعي
-- ✅ طباعة كملصق (A3/A4)
+هذا الفيديو التفاعلي مثالي لـ:
+- 🎥 **منشورات وسائل التواصل**: Facebook, Instagram, LinkedIn, Twitter
+- 📊 **عروض تقديمية**: PowerPoint, Google Slides, Keynote
+- 🎬 **فيديوهات YouTube / TikTok**: بعد إضافة موسيقى خلفية
+- 📧 **حملات البريد الإلكتروني**: مرفق كفيديو GIF أو MP4
+- 🖥️ **مواقع الويب**: تضمين مباشر كصفحة ويب
+- 📱 **تطبيقات الهاتف**: عرض داخل WebView
+- 🎓 **محتوى تعليمي**: شرح مفاهيم تقنية بطريقة بصرية
 
 ---
 
@@ -210,61 +233,66 @@ git push -u origin main
 
 ### About
 
-A **static vertical infographic** web page in Arabic comparing the **Human Brain** vs **Technology** across multiple dimensions:
+An **interactive animated video infographic** in Arabic comparing **Human Brain** vs **Technology** across 5 dimensions:
 - Processing speed ⚡
 - Creativity and critical thinking 💡
 - Learning and adaptation 🔄
 
+**30-second auto-playing video** with full controls (play, pause, restart, seek).
+
 ### Features
 
-- Full Arabic RTL support
-- Vertical scrollable layout (poster-style)
-- Responsive design for all devices
-- Lightweight CSS animations
-- Ready to export as image or PDF
-- No JavaScript required (fully static)
-- Clean, modern design
+- 🎬 **Auto-playing video** with smooth transitions
+- ⏯️ **Video controls**: Play, pause, restart, progress bar
+- 🎭 Professional animations for every element
+- ⏱️ **Duration**: 30 seconds (customizable)
+- 📱 Responsive design for all devices
+- 🎯 YouTube-like experience
+- 🖼️ Export-ready using screen recording tools
 
 ### Quick Start
 
 1. Open `index.html` in any modern browser
-2. Scroll through the 5 sections
-3. Export as image or PDF (see instructions above)
+2. Video starts automatically after 0.5 seconds
+3. Use controls to play, pause, or restart
+4. Click on progress bar to jump to any section
 
-### Export Options
+### Recording Options
 
-**Chrome/Edge:**
-1. Open DevTools (`Ctrl+Shift+I`)
-2. Open Command Palette (`Ctrl+Shift+P`)
-3. Type: `Capture full size screenshot`
+**Windows 10/11:**
+- Press `Win + G` → Start recording
+- Video saved in `Videos/Captures`
 
-**Firefox:**
-1. Right-click on page
-2. Select "Take Screenshot"
-3. Choose "Save Full Page"
+**Mac:**
+- Press `Cmd + Shift + 5` → Select screen recording
+- Choose browser window → Start recording
 
-**Print to PDF:**
-1. Press `Ctrl+P` (or `Cmd+P` on Mac)
-2. Select "Save as PDF"
-3. Adjust settings: Portrait, No margins, Enable backgrounds
+**Professional Tools:**
+- **OBS Studio** (free): Best quality recording
+- **Loom**: Quick sharing and collaboration
+- **Camtasia**: Professional editing included
 
 ### Technology Stack
 
-- Pure HTML5 (structure and content)
-- Pure CSS3 (styling, animations, layout)
-- Google Fonts: Tajawal (Arabic font)
-- No JavaScript (fully static)
+- **HTML5**: Structure and content
+- **CSS3**: Professional animations and styling
+- **Vanilla JavaScript**: Video playback control and event synchronization
+- **Google Fonts (Tajawal)**: Beautiful Arabic typography
+- **No external libraries**: Clean, lightweight code
 
 ### Use Cases
 
 Perfect for:
-- Sending to non-technical clients as PDF/image
-- Social media posts
-- Print as poster
-- Simple presentations
+- 🎥 Social media posts (Facebook, Instagram, LinkedIn, Twitter)
+- 📊 Presentations (PowerPoint, Google Slides, Keynote)
+- 🎬 YouTube / TikTok videos (add background music)
+- 📧 Email campaigns (attach as MP4)
+- 🖥️ Website embedding
+- 🎓 Educational content
 
 ### Customization
 
+- **Video duration**: Edit `video.js` → `SECTION_DURATIONS` array
 - **Text**: Edit `index.html`
 - **Colors**: Edit `styles.css` (gradients and borders)
 - **Fonts**: Edit `styles.css` (font sizes)

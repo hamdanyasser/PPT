@@ -7,31 +7,118 @@
 
 body {
     font-family: 'Tajawal', sans-serif;
-    background: linear-gradient(180deg, #f5f7fa 0%, #e8eef5 50%, #f0f4f8 100%);
+    background: #000;
     direction: rtl;
-    overflow-x: hidden;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
-/* =================== INFOGRAPHIC CONTAINER =================== */
-.infographic-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem;
+/* =================== VIDEO CONTROLS =================== */
+.video-controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.1);
+}
+
+.progress-bar-container {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+.time-display {
+    color: white;
+    font-size: 0.9rem;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* =================== VIDEO CONTAINER =================== */
+.video-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
 }
 
 /* =================== SECTION STYLING =================== */
 .section {
-    background: white;
-    border-radius: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 3rem 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding-bottom: 120px;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s ease;
 }
 
-.section:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+.section.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.section.animate-in {
+    animation: sectionFadeIn 0.8s ease forwards;
+}
+
+@keyframes sectionFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 /* =================== SECTION 1: العنوان =================== */
@@ -56,13 +143,28 @@ body {
     margin: 2rem 0 1.5rem;
     line-height: 1.4;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+}
+
+.section.active .main-title {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .subtitle {
     font-size: 1.3rem;
     font-weight: 400;
-    opacity: 0.95;
+    opacity: 0;
     line-height: 1.6;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 1.2s, transform 0.8s ease 1.2s;
+}
+
+.section.active .subtitle {
+    opacity: 0.95;
+    transform: translateY(0);
 }
 
 /* VS Container with Icons */
@@ -78,6 +180,31 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section.active .brain-side {
+    animation: iconPopIn 0.6s ease 0.2s forwards;
+}
+
+.section.active .robot-side {
+    animation: iconPopIn 0.6s ease 0.4s forwards;
+}
+
+@keyframes iconPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5) rotate(-10deg);
+    }
+    70% {
+        transform: scale(1.1) rotate(5deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 /* Brain Icon */
@@ -215,6 +342,7 @@ body {
 /* =================== SECTION 2, 3, 4: COMPARISON SECTIONS =================== */
 .section-comparison {
     padding: 3rem 2rem;
+    background: linear-gradient(180deg, #f5f7fa 0%, #e8eef5 50%, #f0f4f8 100%);
 }
 
 .section-title {
@@ -223,6 +351,14 @@ body {
     color: #2c3e50;
     text-align: center;
     margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+}
+
+.section.active .section-title {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .cards-container {
@@ -242,8 +378,29 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     min-height: 300px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+
+.section.active .brain-card {
+    animation: cardSlideIn 0.8s ease 0.4s forwards;
+}
+
+.section.active .tech-card {
+    animation: cardSlideIn 0.8s ease 0.6s forwards;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .card:hover {
@@ -490,12 +647,31 @@ body {
 .collab-brain, .collab-robot {
     font-size: 6rem;
     filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.section.active .collab-brain {
+    animation: iconPopIn 0.8s ease 0.3s forwards;
+}
+
+.section.active .collab-robot {
+    animation: iconPopIn 0.8s ease 0.5s forwards;
 }
 
 .plus-sign {
     font-size: 3.5rem;
     font-weight: 900;
     color: #ff6b6b;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.6s ease 0.7s, transform 0.6s ease 0.7s;
+}
+
+.section.active .plus-sign {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .floating-icons {
@@ -524,6 +700,14 @@ body {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease 0.9s, transform 0.8s ease 0.9s;
+}
+
+.section.active .conclusion-main {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .conclusion-secondary {
@@ -531,6 +715,14 @@ body {
     font-weight: 600;
     color: #444;
     margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease 1.3s, transform 0.8s ease 1.3s;
+}
+
+.section.active .conclusion-secondary {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .conclusion-note {
@@ -538,6 +730,12 @@ body {
     color: #666;
     font-style: italic;
     margin-top: 2rem;
+    opacity: 0;
+    transition: opacity 0.8s ease 1.7s;
+}
+
+.section.active .conclusion-note {
+    opacity: 1;
 }
 
 /* =================== ANIMATIONS =================== */
