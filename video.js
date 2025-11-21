@@ -1,5 +1,5 @@
 // =================== VIDEO CONFIGURATION ===================
-const SECTION_DURATIONS = [8000, 15000, 15000, 15000, 12000]; // Duration for each section in milliseconds
+const SECTION_DURATIONS = [10000, 18000, 18000, 18000, 16000]; // Duration for each section in milliseconds (total: 80s)
 const TOTAL_DURATION = SECTION_DURATIONS.reduce((a, b) => a + b, 0);
 
 // =================== DOM ELEMENTS ===================
@@ -19,6 +19,7 @@ let startTime = null;
 let pausedTime = 0;
 let animationFrameId = null;
 let sectionTimeoutId = null;
+let particleIntervals = []; // Store intervals for continuous particles
 
 // =================== INITIALIZATION ===================
 function init() {
@@ -82,6 +83,10 @@ function pause() {
 
     pausedTime = Date.now() - startTime;
 
+    // Clear particle intervals
+    particleIntervals.forEach(interval => clearInterval(interval));
+    particleIntervals = [];
+
     if (window.audioEngine) {
         window.audioEngine.stopBackgroundMusic();
     }
@@ -132,7 +137,80 @@ function nextSection() {
     }
 }
 
+// =================== CONTINUOUS PARTICLE EFFECTS ===================
+function startContinuousParticles(index) {
+    if (!window.particleSystem || !isPlaying) return;
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    switch(index) {
+        case 0: // Title - Continuous sparkles
+            const titleInterval = setInterval(() => {
+                if (!isPlaying || currentSectionIndex !== 0) return;
+                const randomX = centerX + (Math.random() - 0.5) * 400;
+                const randomY = centerY + (Math.random() - 0.5) * 300;
+                window.particleSystem.createSparkles(randomX, randomY, 5);
+            }, 1500);
+            particleIntervals.push(titleInterval);
+            break;
+
+        case 1: // Processing speed - Data streams
+            const speedInterval = setInterval(() => {
+                if (!isPlaying || currentSectionIndex !== 1) return;
+                window.particleSystem.createRain(12);
+                const leftX = centerX - 300;
+                const rightX = centerX + 300;
+                window.particleSystem.createSparkles(leftX, centerY, 6);
+                setTimeout(() => {
+                    window.particleSystem.createSparkles(rightX, centerY, 6);
+                }, 800);
+            }, 3000);
+            particleIntervals.push(speedInterval);
+            break;
+
+        case 2: // Creativity - Idea bursts
+            const creativityInterval = setInterval(() => {
+                if (!isPlaying || currentSectionIndex !== 2) return;
+                const randomX = centerX + (Math.random() - 0.5) * 500;
+                const randomY = centerY + (Math.random() - 0.5) * 400;
+                window.particleSystem.createBurst(randomX, randomY, 10, '#ffd700');
+                if (window.audioEngine) window.audioEngine.playSparkle();
+            }, 2500);
+            particleIntervals.push(creativityInterval);
+            break;
+
+        case 3: // Learning - Growth patterns
+            const learningInterval = setInterval(() => {
+                if (!isPlaying || currentSectionIndex !== 3) return;
+                window.particleSystem.createFloating(15);
+                setTimeout(() => {
+                    window.particleSystem.createSparkles(centerX, centerY - 100, 8);
+                }, 500);
+            }, 3500);
+            particleIntervals.push(learningInterval);
+            break;
+
+        case 4: // Conclusion - Celebration
+            const conclusionInterval = setInterval(() => {
+                if (!isPlaying || currentSectionIndex !== 4) return;
+                window.particleSystem.createConfetti(30);
+                setTimeout(() => {
+                    const randomX = centerX + (Math.random() - 0.5) * 600;
+                    const randomY = centerY + (Math.random() - 0.5) * 400;
+                    window.particleSystem.createBurst(randomX, randomY, 12, ['#4facfe', '#ff6b6b', '#ffd700'][Math.floor(Math.random() * 3)]);
+                }, 1000);
+            }, 4000);
+            particleIntervals.push(conclusionInterval);
+            break;
+    }
+}
+
 function showSection(index) {
+    // Clear any existing particle intervals
+    particleIntervals.forEach(interval => clearInterval(interval));
+    particleIntervals = [];
+
     // Remove active class from all sections
     sections.forEach(section => {
         section.classList.remove('active');
@@ -146,6 +224,9 @@ function showSection(index) {
     if (window.audioEngine && index > 0) {
         window.audioEngine.playWhoosh();
     }
+
+    // Start continuous particle effects for this section
+    startContinuousParticles(index);
 
     // Trigger particle effects based on section
     if (window.particleSystem) {

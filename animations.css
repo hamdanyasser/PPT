@@ -1,0 +1,406 @@
+/* =================== CONTINUOUS ANIMATIONS =================== */
+
+/* Floating animation for all icons */
+@keyframes continuous-float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-15px) rotate(2deg);
+    }
+    50% {
+        transform: translateY(-25px) rotate(0deg);
+    }
+    75% {
+        transform: translateY(-15px) rotate(-2deg);
+    }
+}
+
+/* Pulse animation for emphasis */
+@keyframes continuous-pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+/* Rotate animation */
+@keyframes continuous-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Wave effect */
+@keyframes wave {
+    0%, 100% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateX(5px) translateY(-5px);
+    }
+    50% {
+        transform: translateX(0) translateY(-10px);
+    }
+    75% {
+        transform: translateX(-5px) translateY(-5px);
+    }
+}
+
+/* Bounce effect */
+@keyframes bounce-continuous {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse-continuous {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(102, 126, 234, 0.5),
+                    0 0 20px rgba(102, 126, 234, 0.3),
+                    0 0 30px rgba(102, 126, 234, 0.1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.8),
+                    0 0 40px rgba(102, 126, 234, 0.5),
+                    0 0 60px rgba(102, 126, 234, 0.3);
+    }
+}
+
+/* Scale pulse for numbers */
+@keyframes number-pulse {
+    0%, 100% {
+        transform: scale(1);
+        color: #667eea;
+    }
+    50% {
+        transform: scale(1.15);
+        color: #764ba2;
+    }
+}
+
+/* Data flow animation */
+@keyframes data-stream {
+    0% {
+        transform: translateX(0) scaleX(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(50px) scaleX(1);
+        opacity: 0;
+    }
+}
+
+/* Lightning bolt animation */
+@keyframes lightning-flash {
+    0%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 10px #ffd700);
+    }
+    50% {
+        opacity: 0.5;
+        filter: drop-shadow(0 0 30px #ffd700);
+    }
+}
+
+/* Brain pulse animation */
+@keyframes brain-pulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.6));
+    }
+    50% {
+        filter: drop-shadow(0 0 25px rgba(79, 172, 254, 1));
+    }
+}
+
+/* Apply continuous animations to sections */
+.section.active .card-icon {
+    animation: continuous-float 4s ease-in-out infinite;
+}
+
+.section.active .small-brain,
+.section.active .small-robot {
+    animation: continuous-pulse 2.5s ease-in-out infinite;
+}
+
+.section.active .lightning {
+    animation: lightning-flash 1.5s ease-in-out infinite;
+}
+
+.section.active .brain-hemisphere {
+    animation: brain-pulse 2s ease-in-out infinite;
+}
+
+.section.active .binary-numbers span {
+    animation: number-pulse 1.5s ease-in-out infinite;
+}
+
+.section.active .binary-numbers span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.section.active .binary-numbers span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.section.active .binary-numbers span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.section.active .binary-numbers span:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+/* Card hover effects enhanced */
+.card {
+    transition: all 0.3s ease;
+}
+
+.section.active .card:hover {
+    transform: translateY(-10px) scale(1.03) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Animated statistics */
+.card-detail {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-detail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+/* Continuous sparkle for creativity section */
+.section.active .lightbulb {
+    animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+.section.active .idea-sparks span {
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Progress visualization */
+.section.active .progress-brain {
+    animation: continuous-float 3s ease-in-out infinite;
+}
+
+.section.active .progress-brain.bright {
+    animation: continuous-float 3s ease-in-out infinite, brain-pulse 2s ease-in-out infinite;
+}
+
+/* Data blocks animation */
+.section.active .data-blocks .block {
+    animation: bounce-continuous 1.5s ease-in-out infinite;
+}
+
+.section.active .data-blocks .block:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.section.active .data-blocks .block:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.section.active .data-blocks .block:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Conclusion animations */
+.section.active .collab-brain,
+.section.active .collab-robot {
+    animation: iconPopIn 0.8s ease forwards, continuous-float 4s ease-in-out 1s infinite;
+}
+
+.section.active .result-card {
+    animation: slideInScale 0.8s ease forwards;
+    transition: transform 0.3s ease;
+}
+
+.section.active .result-card:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+/* Staggered list animations */
+@keyframes list-item-appear {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.section.active .result-list li {
+    animation: list-item-appear 0.6s ease forwards;
+}
+
+/* Title animations */
+.section.active .section-title {
+    animation: continuous-pulse 3s ease-in-out infinite;
+}
+
+/* VS text animation */
+.section.active .vs-text {
+    animation: number-pulse 2s ease-in-out infinite;
+}
+
+/* Floating icons in conclusion */
+.section.active .float-icon {
+    animation: float-around 6s ease-in-out infinite;
+}
+
+.section.active .float-icon:nth-child(even) {
+    animation-direction: reverse;
+}
+
+/* Speed lines animation enhancement */
+.section.active .speed-lines span {
+    animation: speed-move 0.8s ease-in-out infinite;
+}
+
+/* Robot eyes blink */
+@keyframes blink {
+    0%, 90%, 100% {
+        transform: scaleY(1);
+    }
+    95% {
+        transform: scaleY(0.1);
+    }
+}
+
+.section.active .eye {
+    animation: blink 4s ease-in-out infinite;
+}
+
+.section.active .eye:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* Enhanced transition between sections */
+.section {
+    transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.6s ease;
+}
+
+.section.active {
+    animation: sectionFadeIn 0.8s ease forwards;
+}
+
+@keyframes sectionFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Number counter animation */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-number {
+    animation: countUp 0.8s ease forwards;
+    font-weight: 800;
+    color: #667eea;
+    display: inline-block;
+    padding: 2px 6px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    border-radius: 4px;
+    font-size: 1.05em;
+    transition: all 0.3s ease;
+}
+
+.stat-number:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.section.active .stat-number {
+    animation: countUp 0.8s ease forwards, number-pulse 3s ease-in-out 1s infinite;
+}
+
+/* Progressive reveal for cards */
+.section.active .card {
+    animation: cardSlideIn 0.8s ease forwards;
+}
+
+.section.active .brain-card {
+    animation-delay: 0.2s;
+}
+
+.section.active .tech-card {
+    animation-delay: 0.4s;
+}
+
+/* Particle trail effect */
+@keyframes particle-trail {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Gradient shift background */
+@keyframes gradient-shift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.section-header::before {
+    background: linear-gradient(270deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3), rgba(240, 147, 251, 0.3));
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+}
