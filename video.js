@@ -1,5 +1,5 @@
 // =================== VIDEO CONFIGURATION ===================
-const SECTION_DURATIONS = [4000, 6000, 6000, 6000, 8000]; // Duration for each section in milliseconds
+const SECTION_DURATIONS = [6000, 10000, 10000, 10000, 10000]; // Duration for each section in milliseconds
 const TOTAL_DURATION = SECTION_DURATIONS.reduce((a, b) => a + b, 0);
 
 // =================== DOM ELEMENTS ===================
@@ -66,6 +66,7 @@ async function play() {
     // Resume AudioContext on user gesture
     if (window.audioEngine) {
         await window.audioEngine.resume();
+        window.audioEngine.startBackgroundMusic();
     }
 
     updateProgress();
@@ -80,6 +81,10 @@ function pause() {
     pauseBtn.style.display = 'none';
 
     pausedTime = Date.now() - startTime;
+
+    if (window.audioEngine) {
+        window.audioEngine.stopBackgroundMusic();
+    }
 
     cancelAnimationFrame(animationFrameId);
     clearTimeout(sectionTimeoutId);
@@ -148,45 +153,83 @@ function showSection(index) {
         const centerY = window.innerHeight / 2;
 
         switch(index) {
-            case 0: // Title section
-                window.particleSystem.createBurst(centerX, centerY, 20, '#667eea');
+            case 0: // Title section - Epic entrance
+                window.particleSystem.createBurst(centerX, centerY, 30, '#667eea');
+                setTimeout(() => {
+                    window.particleSystem.createBurst(centerX - 150, centerY - 100, 20, '#764ba2');
+                }, 300);
+                setTimeout(() => {
+                    window.particleSystem.createBurst(centerX + 150, centerY - 100, 20, '#f093fb');
+                }, 600);
                 if (window.audioEngine) {
                     setTimeout(() => window.audioEngine.playPop(), 200);
+                    setTimeout(() => window.audioEngine.playSparkle(), 500);
                 }
                 break;
 
-            case 1: // Processing speed
-                window.particleSystem.createRain(15);
+            case 1: // Processing speed - Rain of data
+                window.particleSystem.createRain(25);
+                setTimeout(() => {
+                    window.particleSystem.createSparkles(centerX - 200, centerY, 10);
+                }, 1000);
+                setTimeout(() => {
+                    window.particleSystem.createSparkles(centerX + 200, centerY, 10);
+                }, 1500);
                 setTimeout(() => {
                     if (window.audioEngine) window.audioEngine.playRise();
                 }, 400);
                 break;
 
-            case 2: // Creativity
-                window.particleSystem.createSparkles(centerX, centerY - 100, 12);
+            case 2: // Creativity - Ideas explosion
+                window.particleSystem.createSparkles(centerX, centerY - 100, 18);
+                setTimeout(() => {
+                    window.particleSystem.createBurst(centerX - 100, centerY, 15, '#ffd700');
+                }, 500);
+                setTimeout(() => {
+                    window.particleSystem.createBurst(centerX + 100, centerY, 15, '#ff69b4');
+                }, 1000);
                 setTimeout(() => {
                     if (window.audioEngine) window.audioEngine.playSparkle();
                 }, 300);
+                setTimeout(() => {
+                    if (window.audioEngine) window.audioEngine.playPop();
+                }, 800);
                 break;
 
-            case 3: // Learning
-                window.particleSystem.createFloating(15);
+            case 3: // Learning - Growth pattern
+                window.particleSystem.createFloating(20);
+                setTimeout(() => {
+                    window.particleSystem.createBurst(centerX, centerY - 50, 15, '#4facfe');
+                }, 700);
+                setTimeout(() => {
+                    window.particleSystem.createSparkles(centerX, centerY + 50, 12);
+                }, 1400);
                 setTimeout(() => {
                     if (window.audioEngine) window.audioEngine.playPop();
                 }, 500);
+                setTimeout(() => {
+                    if (window.audioEngine) window.audioEngine.playRise();
+                }, 1200);
                 break;
 
-            case 4: // Conclusion
+            case 4: // Conclusion - Grand finale
                 setTimeout(() => {
-                    window.particleSystem.createConfetti(35);
+                    window.particleSystem.createConfetti(50);
                     if (window.audioEngine) window.audioEngine.playSuccess();
                 }, 300);
                 setTimeout(() => {
-                    window.particleSystem.createBurst(centerX - 200, centerY, 15, '#4facfe');
-                }, 600);
+                    window.particleSystem.createBurst(centerX - 250, centerY, 20, '#4facfe');
+                    window.particleSystem.createBurst(centerX + 250, centerY, 20, '#ff6b6b');
+                }, 800);
                 setTimeout(() => {
-                    window.particleSystem.createBurst(centerX + 200, centerY, 15, '#ff6b6b');
-                }, 900);
+                    window.particleSystem.createSparkles(centerX, centerY - 150, 15);
+                }, 1300);
+                setTimeout(() => {
+                    window.particleSystem.createBurst(centerX, centerY + 100, 25, '#ffd700');
+                }, 1800);
+                setTimeout(() => {
+                    if (window.audioEngine) window.audioEngine.playSparkle();
+                }, 1500);
                 break;
         }
     }

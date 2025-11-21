@@ -174,12 +174,60 @@ class AudioEngine {
     // =================== BACKGROUND MUSIC ===================
 
     startBackgroundMusic() {
-        // Background music disabled for performance
-        // The sound effects provide enough audio feedback
+        if (!this.enabled || this.backgroundLoop) return;
+        if (!this.context) this.init();
+
+        this.backgroundLoop = true;
+        this.playBackgroundLoop();
+    }
+
+    playBackgroundLoop() {
+        if (!this.backgroundLoop || !this.context) return;
+
+        const now = this.context.currentTime;
+        const duration = 8;
+
+        // Create a pleasant chord progression
+        const chords = [
+            [261.63, 329.63, 392.00], // C-E-G (C major)
+            [293.66, 369.99, 440.00], // D-F#-A (D major)
+            [246.94, 329.63, 392.00], // B-E-G (Em)
+            [261.63, 329.63, 392.00]  // C-E-G (C major)
+        ];
+
+        const currentChord = chords[Math.floor(Math.random() * chords.length)];
+
+        currentChord.forEach((freq, index) => {
+            const oscillator = this.context.createOscillator();
+            const gainNode = this.context.createGain();
+            const filter = this.context.createBiquadFilter();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(freq, now);
+
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(800, now);
+            filter.Q.setValueAtTime(1, now);
+
+            gainNode.gain.setValueAtTime(0, now);
+            gainNode.gain.linearRampToValueAtTime(0.015, now + 1);
+            gainNode.gain.setValueAtTime(0.015, now + duration - 2);
+            gainNode.gain.linearRampToValueAtTime(0, now + duration);
+
+            oscillator.connect(filter);
+            filter.connect(gainNode);
+            gainNode.connect(this.masterGain);
+
+            oscillator.start(now);
+            oscillator.stop(now + duration);
+        });
+
+        // Schedule next chord
+        setTimeout(() => this.playBackgroundLoop(), (duration - 1) * 1000);
     }
 
     stopBackgroundMusic() {
-        // No-op
+        this.backgroundLoop = false;
     }
 
     // =================== UTILITY ===================
