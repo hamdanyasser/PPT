@@ -10,10 +10,23 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="infographic-container">
+    <!-- Video Controls -->
+    <div class="video-controls">
+        <button id="playBtn" class="control-btn" title="تشغيل">▶️</button>
+        <button id="pauseBtn" class="control-btn" title="إيقاف مؤقت" style="display: none;">⏸️</button>
+        <button id="restartBtn" class="control-btn" title="إعادة">🔄</button>
+        <div class="progress-bar-container">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <div class="time-display">
+            <span id="currentTime">0:00</span> / <span id="totalTime">0:30</span>
+        </div>
+    </div>
+
+    <div class="video-container">
 
         <!-- Section 1: العنوان -->
-        <section class="section section-header">
+        <section class="section section-header" data-section="1">
             <div class="header-content">
                 <div class="vs-container">
                     <div class="icon-wrapper brain-side">
@@ -50,7 +63,7 @@
         </section>
 
         <!-- Section 2: سرعة المعالجة -->
-        <section class="section section-comparison">
+        <section class="section section-comparison" data-section="2">
             <h2 class="section-title">سرعة المعالجة ⚡</h2>
             <div class="cards-container">
                 <div class="card brain-card">
@@ -87,7 +100,7 @@
         </section>
 
         <!-- Section 3: الإبداع والتفكير النقدي -->
-        <section class="section section-comparison">
+        <section class="section section-comparison" data-section="3">
             <h2 class="section-title">الإبداع والتفكير النقدي 💡</h2>
             <div class="cards-container">
                 <div class="card brain-card">
@@ -125,7 +138,7 @@
         </section>
 
         <!-- Section 4: التعلّم والتكيف -->
-        <section class="section section-comparison">
+        <section class="section section-comparison" data-section="4">
             <h2 class="section-title">التعلّم والتكيّف 🔄</h2>
             <div class="cards-container">
                 <div class="card brain-card">
@@ -159,7 +172,7 @@
         </section>
 
         <!-- Section 5: الخاتمة -->
-        <section class="section section-conclusion">
+        <section class="section section-conclusion" data-section="5">
             <div class="conclusion-content">
                 <div class="conclusion-icons">
                     <div class="collab-brain">🧠</div>
@@ -185,5 +198,7 @@
         </section>
 
     </div>
+
+    <script src="video.js"></script>
 </body>
 </html>
