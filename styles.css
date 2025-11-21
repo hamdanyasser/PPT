@@ -1,0 +1,845 @@
+/* =================== GLOBAL STYLES =================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e3e8f0 100%);
+    overflow: hidden;
+    direction: rtl;
+}
+
+/* =================== SLIDESHOW CONTAINER =================== */
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+/* =================== SLIDES =================== */
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =================== SLIDE 1: العنوان =================== */
+.slide-1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.main-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 3rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.vs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.icon-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.icon-circle.brain {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.icon-circle.robot {
+    background: linear-gradient(135deg, #a8a8a8 0%, #d3d3d3 100%);
+}
+
+.emoji {
+    font-size: 5rem;
+}
+
+.icon-label {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.vs-text {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.subtitle {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-top: 2rem;
+}
+
+/* =================== SLIDE 2, 3, 4: SPLIT LAYOUT =================== */
+.slide-2,
+.slide-3,
+.slide-4 {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.slide-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.split-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.split-block {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 350px;
+}
+
+.brain-block {
+    border-top: 5px solid #4facfe;
+}
+
+.tech-block {
+    border-top: 5px solid #a8a8a8;
+}
+
+.block-icon {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.emoji-large {
+    font-size: 4rem;
+}
+
+.emoji-medium {
+    font-size: 3rem;
+}
+
+.emoji-xlarge {
+    font-size: 6rem;
+}
+
+.block-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+/* =================== SLIDE 2 SPECIFIC: سرعة المعالجة =================== */
+.brain-processor {
+    position: relative;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.thought-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+}
+
+.thought-icon {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.thought-icon:nth-child(1) {
+    top: -20px;
+    right: 50%;
+    animation-delay: 0s;
+}
+
+.thought-icon:nth-child(2) {
+    top: 50%;
+    right: -20px;
+    animation-delay: 0.5s;
+}
+
+.thought-icon:nth-child(3) {
+    bottom: -20px;
+    right: 50%;
+    animation-delay: 1s;
+}
+
+.thought-icon:nth-child(4) {
+    top: 50%;
+    left: -20px;
+    animation-delay: 1.5s;
+}
+
+.tech-processor {
+    position: relative;
+}
+
+.data-stream {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.data-number {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #00ff00;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 3px 8px;
+    border-radius: 3px;
+    animation: scroll-data 2s linear infinite;
+}
+
+.data-number:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.data-number:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+/* =================== SLIDE 3 SPECIFIC: الإبداع =================== */
+.creative-brain {
+    position: relative;
+}
+
+.lightbulb {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    animation: glow-bulb 1.5s ease-in-out infinite;
+}
+
+.creative-ideas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+}
+
+.idea-icon {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: pop-in 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.idea-icon:nth-child(1) {
+    top: -30px;
+    right: 20px;
+    animation-delay: 0.5s;
+}
+
+.idea-icon:nth-child(2) {
+    top: 20px;
+    right: -30px;
+    animation-delay: 1s;
+}
+
+.idea-icon:nth-child(3) {
+    bottom: -30px;
+    right: 30px;
+    animation-delay: 1.5s;
+}
+
+.idea-icon:nth-child(4) {
+    top: 30px;
+    left: -30px;
+    animation-delay: 2s;
+}
+
+.tech-limits {
+    position: relative;
+}
+
+.data-input {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.data-line {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to left, #4facfe, transparent);
+    margin: 8px 0;
+    animation: flow-data 1.5s ease-in-out infinite;
+}
+
+.data-line:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.data-line:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.copy-indicator {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    opacity: 0.6;
+}
+
+/* =================== SLIDE 4 SPECIFIC: التعلم =================== */
+.brain-evolution {
+    display: flex;
+    gap: 2rem;
+}
+
+.brain-stage {
+    opacity: 0.3;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+}
+
+.slide.active .brain-stage.stage-1 {
+    animation: evolve 1s ease-out 0.5s forwards;
+}
+
+.slide.active .brain-stage.stage-2 {
+    animation: evolve 1s ease-out 1.5s forwards;
+}
+
+.slide.active .brain-stage.stage-3 {
+    animation: evolve 1s ease-out 2.5s forwards;
+}
+
+.tech-learning {
+    position: relative;
+}
+
+.robot-learning {
+    transition: filter 3s ease;
+}
+
+.slide.active .robot-learning {
+    filter: hue-rotate(180deg);
+}
+
+.learning-data {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.data-particle {
+    display: block;
+    font-size: 1.5rem;
+    color: #4facfe;
+    animation: particle-flow 2s ease-in-out infinite;
+}
+
+.data-particle:nth-child(1) {
+    animation-delay: 0s;
+}
+.data-particle:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.data-particle:nth-child(3) {
+    animation-delay: 0.4s;
+}
+.data-particle:nth-child(4) {
+    animation-delay: 0.6s;
+}
+.data-particle:nth-child(5) {
+    animation-delay: 0.8s;
+}
+
+/* =================== SLIDE 5: الخاتمة =================== */
+.slide-5 {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.main-conclusion {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    max-width: 900px;
+}
+
+.unity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.unity-brain,
+.unity-robot {
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+}
+
+.plus-sign {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ff6b6b;
+}
+
+.floating-icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 400px;
+    pointer-events: none;
+}
+
+.float-icon {
+    position: absolute;
+    font-size: 2rem;
+    animation: circular-float 8s ease-in-out infinite;
+}
+
+.float-icon.icon-1 {
+    top: 10%;
+    right: 20%;
+    animation-delay: 0s;
+}
+.float-icon.icon-2 {
+    top: 20%;
+    right: 5%;
+    animation-delay: 1s;
+}
+.float-icon.icon-3 {
+    top: 50%;
+    right: 0%;
+    animation-delay: 2s;
+}
+.float-icon.icon-4 {
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 3s;
+}
+.float-icon.icon-5 {
+    top: 10%;
+    left: 15%;
+    animation-delay: 4s;
+}
+.float-icon.icon-6 {
+    top: 25%;
+    left: 5%;
+    animation-delay: 5s;
+}
+.float-icon.icon-7 {
+    top: 55%;
+    left: 0%;
+    animation-delay: 6s;
+}
+.float-icon.icon-8 {
+    bottom: 15%;
+    left: 10%;
+    animation-delay: 7s;
+}
+
+.final-message {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-top: 2rem;
+}
+
+/* =================== CONTROLS =================== */
+.controls {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.restart-btn {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.slide-indicators {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #667eea;
+    transform: scale(1.3);
+}
+
+/* =================== PROGRESS BAR =================== */
+.progress-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    width: 0%;
+    transition: width 0.1s linear;
+}
+
+/* =================== ANIMATIONS =================== */
+@keyframes fade-in-scale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.5));
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(79, 172, 254, 1));
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes scroll-data {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+}
+
+@keyframes glow-bulb {
+    0%, 100% {
+        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1));
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+@keyframes pop-in {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes flow-data {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        width: 60px;
+        opacity: 0;
+    }
+}
+
+@keyframes evolve {
+    to {
+        opacity: 1;
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px rgba(79, 172, 254, 0.8));
+    }
+}
+
+@keyframes particle-flow {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-80px);
+        opacity: 0;
+    }
+}
+
+@keyframes slide-in-right-unity {
+    from {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-in-left-unity {
+    from {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes circular-float {
+    0%, 100% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(10px, -10px);
+    }
+    50% {
+        transform: translate(0, -20px);
+    }
+    75% {
+        transform: translate(-10px, -10px);
+    }
+}
+
+/* =================== SLIDE 1 ANIMATIONS =================== */
+.slide-1.active .main-title {
+    animation: fade-in-scale 1s ease-out;
+}
+
+.slide-1.active .brain-icon {
+    animation: slide-in-right 1s ease-out 0.5s both;
+}
+
+.slide-1.active .robot-icon {
+    animation: slide-in-left 1s ease-out 0.5s both;
+}
+
+.slide-1.active .subtitle {
+    animation: fade-in 1s ease-out 1.5s both;
+}
+
+/* =================== SLIDE 5 ANIMATIONS =================== */
+.slide-5.active .unity-brain {
+    animation: slide-in-right-unity 1s ease-out 0.5s both;
+}
+
+.slide-5.active .unity-robot {
+    animation: slide-in-left-unity 1s ease-out 0.5s both;
+}
+
+/* =================== RESPONSIVE DESIGN =================== */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .slide-title {
+        font-size: 1.8rem;
+    }
+
+    .split-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .icon-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .emoji {
+        font-size: 3.5rem;
+    }
+
+    .emoji-large {
+        font-size: 3rem;
+    }
+
+    .emoji-xlarge {
+        font-size: 4rem;
+    }
+
+    .vs-container {
+        gap: 1.5rem;
+    }
+
+    .vs-text {
+        font-size: 2rem;
+    }
+
+    .block-text {
+        font-size: 1.1rem;
+    }
+
+    .main-conclusion {
+        font-size: 1.5rem;
+    }
+
+    .controls {
+        padding: 0.8rem 1rem;
+        gap: 0.5rem;
+        bottom: 60px;
+    }
+
+    .control-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .floating-icons {
+        width: 300px;
+        height: 300px;
+    }
+
+    .float-icon {
+        font-size: 1.5rem;
+    }
+}
