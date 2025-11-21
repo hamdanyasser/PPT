@@ -185,18 +185,45 @@ class AudioEngine {
         if (!this.backgroundLoop || !this.context) return;
 
         const now = this.context.currentTime;
-        const duration = 8;
+        const beatDuration = 0.5; // 120 BPM
+        const patternLength = 4; // 4 beats
 
-        // Create a pleasant chord progression
+        // Energetic chord progression with rhythm
         const chords = [
-            [261.63, 329.63, 392.00], // C-E-G (C major)
-            [293.66, 369.99, 440.00], // D-F#-A (D major)
-            [246.94, 329.63, 392.00], // B-E-G (Em)
-            [261.63, 329.63, 392.00]  // C-E-G (C major)
+            [523.25, 659.25, 783.99], // C5-E5-G5 (higher octave)
+            [587.33, 739.99, 880.00], // D5-F#5-A5
+            [493.88, 659.25, 783.99], // B4-E5-G5
+            [523.25, 659.25, 783.99]  // C5-E5-G5
         ];
 
-        const currentChord = chords[Math.floor(Math.random() * chords.length)];
+        const chordIndex = Math.floor(Math.random() * chords.length);
+        const currentChord = chords[chordIndex];
 
+        // Create bass line (more energetic)
+        for (let beat = 0; beat < patternLength; beat++) {
+            const bassOsc = this.context.createOscillator();
+            const bassGain = this.context.createGain();
+            const bassFilter = this.context.createBiquadFilter();
+
+            bassOsc.type = 'triangle';
+            bassOsc.frequency.setValueAtTime(currentChord[0] / 2, now + beat * beatDuration);
+
+            bassFilter.type = 'lowpass';
+            bassFilter.frequency.setValueAtTime(400, now + beat * beatDuration);
+
+            bassGain.gain.setValueAtTime(0, now + beat * beatDuration);
+            bassGain.gain.linearRampToValueAtTime(0.04, now + beat * beatDuration + 0.01);
+            bassGain.gain.exponentialRampToValueAtTime(0.001, now + beat * beatDuration + 0.3);
+
+            bassOsc.connect(bassFilter);
+            bassFilter.connect(bassGain);
+            bassGain.connect(this.masterGain);
+
+            bassOsc.start(now + beat * beatDuration);
+            bassOsc.stop(now + beat * beatDuration + 0.3);
+        }
+
+        // Melodic chords (brighter)
         currentChord.forEach((freq, index) => {
             const oscillator = this.context.createOscillator();
             const gainNode = this.context.createGain();
@@ -206,24 +233,48 @@ class AudioEngine {
             oscillator.frequency.setValueAtTime(freq, now);
 
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, now);
-            filter.Q.setValueAtTime(1, now);
+            filter.frequency.setValueAtTime(2000, now);
+            filter.Q.setValueAtTime(2, now);
 
             gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(0.015, now + 1);
-            gainNode.gain.setValueAtTime(0.015, now + duration - 2);
-            gainNode.gain.linearRampToValueAtTime(0, now + duration);
+            gainNode.gain.linearRampToValueAtTime(0.025, now + 0.3);
+            gainNode.gain.setValueAtTime(0.025, now + 1.5);
+            gainNode.gain.linearRampToValueAtTime(0, now + 2);
 
             oscillator.connect(filter);
             filter.connect(gainNode);
             gainNode.connect(this.masterGain);
 
             oscillator.start(now);
-            oscillator.stop(now + duration);
+            oscillator.stop(now + 2);
         });
 
-        // Schedule next chord
-        setTimeout(() => this.playBackgroundLoop(), (duration - 1) * 1000);
+        // Hi-hat rhythm for energy
+        for (let i = 0; i < 8; i++) {
+            const hihat = this.context.createOscillator();
+            const hihatGain = this.context.createGain();
+            const hihatFilter = this.context.createBiquadFilter();
+
+            hihat.type = 'square';
+            hihat.frequency.setValueAtTime(8000, now + i * 0.25);
+
+            hihatFilter.type = 'highpass';
+            hihatFilter.frequency.setValueAtTime(5000, now + i * 0.25);
+
+            hihatGain.gain.setValueAtTime(0, now + i * 0.25);
+            hihatGain.gain.linearRampToValueAtTime(0.01, now + i * 0.25 + 0.01);
+            hihatGain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.25 + 0.08);
+
+            hihat.connect(hihatFilter);
+            hihatFilter.connect(hihatGain);
+            hihatGain.connect(this.masterGain);
+
+            hihat.start(now + i * 0.25);
+            hihat.stop(now + i * 0.25 + 0.08);
+        }
+
+        // Schedule next loop
+        setTimeout(() => this.playBackgroundLoop(), 1800);
     }
 
     stopBackgroundMusic() {

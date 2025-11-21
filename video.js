@@ -1,5 +1,5 @@
 // =================== VIDEO CONFIGURATION ===================
-const SECTION_DURATIONS = [6000, 10000, 10000, 10000, 10000]; // Duration for each section in milliseconds
+const SECTION_DURATIONS = [8000, 15000, 15000, 15000, 12000]; // Duration for each section in milliseconds
 const TOTAL_DURATION = SECTION_DURATIONS.reduce((a, b) => a + b, 0);
 
 // =================== DOM ELEMENTS ===================
