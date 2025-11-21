@@ -2,35 +2,35 @@
 .results-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    margin: 2rem 0;
-    max-width: 1200px;
+    gap: 1.5rem;
+    margin: 1rem 0;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .result-card {
     background: white;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 1.3rem 1.5rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     opacity: 0;
-    transform: translateY(30px) scale(0.9);
-    transition: all 0.8s ease;
+    transform: translateY(20px) scale(0.95);
+    transition: all 0.5s ease;
 }
 
 .section.active .winner-human {
-    animation: slideInScale 0.8s ease 0.5s forwards;
+    animation: slideInScale 0.5s ease 0.2s forwards;
 }
 
 .section.active .winner-tech {
-    animation: slideInScale 0.8s ease 0.7s forwards;
+    animation: slideInScale 0.5s ease 0.3s forwards;
 }
 
 @keyframes slideInScale {
     from {
         opacity: 0;
-        transform: translateY(30px) scale(0.9);
+        transform: translateY(20px) scale(0.95);
     }
     to {
         opacity: 1;
@@ -39,23 +39,23 @@
 }
 
 .winner-human {
-    border-top: 5px solid #667eea;
+    border-top: 4px solid #667eea;
 }
 
 .winner-tech {
-    border-top: 5px solid #4facfe;
+    border-top: 4px solid #4facfe;
 }
 
 .result-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
     text-align: center;
 }
 
 .result-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #2c3e50;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
     text-align: center;
     font-weight: 700;
 }
@@ -66,27 +66,28 @@
 }
 
 .result-list li {
-    font-size: 1.05rem;
-    line-height: 2;
+    font-size: 0.92rem;
+    line-height: 1.6;
     color: #555;
-    padding: 0.7rem 0;
-    padding-right: 1rem;
+    padding: 0.5rem 0;
+    padding-right: 0.8rem;
     border-bottom: 1px solid #f0f0f0;
     opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateX(-15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.section.active .result-list li:nth-child(1) { animation: slideInList 0.5s ease 1s forwards; }
-.section.active .result-list li:nth-child(2) { animation: slideInList 0.5s ease 1.2s forwards; }
-.section.active .result-list li:nth-child(3) { animation: slideInList 0.5s ease 1.4s forwards; }
-.section.active .result-list li:nth-child(4) { animation: slideInList 0.5s ease 1.6s forwards; }
-.section.active .result-list li:nth-child(5) { animation: slideInList 0.5s ease 1.8s forwards; }
+.section.active .result-list li:nth-child(1) { animation: slideInList 0.4s ease 0.5s forwards; }
+.section.active .result-list li:nth-child(2) { animation: slideInList 0.4s ease 0.6s forwards; }
+.section.active .result-list li:nth-child(3) { animation: slideInList 0.4s ease 0.7s forwards; }
+.section.active .result-list li:nth-child(4) { animation: slideInList 0.4s ease 0.8s forwards; }
+.section.active .result-list li:nth-child(5) { animation: slideInList 0.4s ease 0.9s forwards; }
+.section.active .result-list li:nth-child(6) { animation: slideInList 0.4s ease 1s forwards; }
 
 @keyframes slideInList {
     from {
         opacity: 0;
-        transform: translateX(-20px);
+        transform: translateX(-15px);
     }
     to {
         opacity: 1;
@@ -95,12 +96,13 @@
 }
 
 .collaboration-section {
-    margin-top: 3rem;
-    padding-top: 2rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
     border-top: 2px dashed rgba(102, 126, 234, 0.3);
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease 2.5s, transform 0.8s ease 2.5s;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease 1.8s, transform 0.6s ease 1.8s;
+    display: none; /* Hidden for 30s video - not enough time */
 }
 
 .section.active .collaboration-section {
@@ -109,14 +111,14 @@
 }
 
 .conclusion-note {
-    font-size: 1.1rem !important;
+    font-size: 0.95rem !important;
     color: #2c3e50 !important;
-    line-height: 1.8 !important;
-    margin-top: 1.5rem !important;
+    line-height: 1.6 !important;
+    margin-top: 1rem !important;
     font-style: normal !important;
 }
 
 .conclusion-note strong {
     color: #667eea;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
