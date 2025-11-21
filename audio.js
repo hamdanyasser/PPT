@@ -178,6 +178,7 @@ class AudioEngine {
         if (!this.context) this.init();
 
         this.backgroundLoop = true;
+        this.loopCount = 0;
         this.playBackgroundLoop();
     }
 
@@ -185,96 +186,143 @@ class AudioEngine {
         if (!this.backgroundLoop || !this.context) return;
 
         const now = this.context.currentTime;
-        const beatDuration = 0.5; // 120 BPM
-        const patternLength = 4; // 4 beats
+        this.loopCount++;
 
-        // Energetic chord progression with rhythm
-        const chords = [
-            [523.25, 659.25, 783.99], // C5-E5-G5 (higher octave)
-            [587.33, 739.99, 880.00], // D5-F#5-A5
-            [493.88, 659.25, 783.99], // B4-E5-G5
-            [523.25, 659.25, 783.99]  // C5-E5-G5
+        // Varied progressions that evolve
+        const progressions = [
+            [[261.63, 329.63, 392.00], [293.66, 369.99, 440.00]], // C-E-G, D-F#-A
+            [[329.63, 415.30, 493.88], [349.23, 440.00, 523.25]], // E-G#-B, F-A-C
+            [[392.00, 493.88, 587.33], [440.00, 554.37, 659.25]], // G-B-D, A-C#-E
+            [[493.88, 622.25, 739.99], [523.25, 659.25, 783.99]]  // B-D#-F#, C-E-G
         ];
 
-        const chordIndex = Math.floor(Math.random() * chords.length);
-        const currentChord = chords[chordIndex];
+        const progressionIndex = Math.floor(this.loopCount / 4) % progressions.length;
+        const chordSet = progressions[progressionIndex];
+        const chordIndex = this.loopCount % 2;
+        const currentChord = chordSet[chordIndex];
 
-        // Create bass line (more energetic)
-        for (let beat = 0; beat < patternLength; beat++) {
+        // Varied rhythm patterns
+        const patterns = [
+            [0, 0.5, 1, 1.5], // Steady
+            [0, 0.25, 0.75, 1.25, 1.75], // Syncopated
+            [0, 0.5, 1, 1.25, 1.75], // Mixed
+            [0, 0.33, 0.66, 1, 1.33, 1.66] // Triplets
+        ];
+
+        const pattern = patterns[Math.floor(this.loopCount / 2) % patterns.length];
+
+        // Bass with varied pattern
+        pattern.forEach(timing => {
             const bassOsc = this.context.createOscillator();
             const bassGain = this.context.createGain();
             const bassFilter = this.context.createBiquadFilter();
 
-            bassOsc.type = 'triangle';
-            bassOsc.frequency.setValueAtTime(currentChord[0] / 2, now + beat * beatDuration);
+            bassOsc.type = this.loopCount % 3 === 0 ? 'sine' : 'triangle';
+            bassOsc.frequency.setValueAtTime(currentChord[0] / 2, now + timing);
 
             bassFilter.type = 'lowpass';
-            bassFilter.frequency.setValueAtTime(400, now + beat * beatDuration);
+            bassFilter.frequency.setValueAtTime(300 + (this.loopCount % 3) * 100, now + timing);
 
-            bassGain.gain.setValueAtTime(0, now + beat * beatDuration);
-            bassGain.gain.linearRampToValueAtTime(0.04, now + beat * beatDuration + 0.01);
-            bassGain.gain.exponentialRampToValueAtTime(0.001, now + beat * beatDuration + 0.3);
+            const accent = timing === 0 ? 1.5 : 1;
+            bassGain.gain.setValueAtTime(0, now + timing);
+            bassGain.gain.linearRampToValueAtTime(0.03 * accent, now + timing + 0.01);
+            bassGain.gain.exponentialRampToValueAtTime(0.001, now + timing + 0.25);
 
             bassOsc.connect(bassFilter);
             bassFilter.connect(bassGain);
             bassGain.connect(this.masterGain);
 
-            bassOsc.start(now + beat * beatDuration);
-            bassOsc.stop(now + beat * beatDuration + 0.3);
-        }
+            bassOsc.start(now + timing);
+            bassOsc.stop(now + timing + 0.25);
+        });
 
-        // Melodic chords (brighter)
+        // Melodic chords with variation
+        const chordDuration = 1.5 + (this.loopCount % 3) * 0.3;
         currentChord.forEach((freq, index) => {
             const oscillator = this.context.createOscillator();
             const gainNode = this.context.createGain();
             const filter = this.context.createBiquadFilter();
 
-            oscillator.type = 'sine';
+            const waveTypes = ['sine', 'triangle', 'sine'];
+            oscillator.type = waveTypes[this.loopCount % 3];
             oscillator.frequency.setValueAtTime(freq, now);
 
             filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(2000, now);
-            filter.Q.setValueAtTime(2, now);
+            filter.frequency.setValueAtTime(1500 + (this.loopCount % 5) * 200, now);
+            filter.Q.setValueAtTime(1 + index * 0.5, now);
 
+            const volume = 0.02 + (index === 0 ? 0.005 : 0);
             gainNode.gain.setValueAtTime(0, now);
-            gainNode.gain.linearRampToValueAtTime(0.025, now + 0.3);
-            gainNode.gain.setValueAtTime(0.025, now + 1.5);
-            gainNode.gain.linearRampToValueAtTime(0, now + 2);
+            gainNode.gain.linearRampToValueAtTime(volume, now + 0.2);
+            gainNode.gain.setValueAtTime(volume, now + chordDuration - 0.3);
+            gainNode.gain.linearRampToValueAtTime(0, now + chordDuration);
 
             oscillator.connect(filter);
             filter.connect(gainNode);
             gainNode.connect(this.masterGain);
 
             oscillator.start(now);
-            oscillator.stop(now + 2);
+            oscillator.stop(now + chordDuration);
         });
 
-        // Hi-hat rhythm for energy
-        for (let i = 0; i < 8; i++) {
+        // Varied hi-hat patterns
+        const hihatPatterns = [
+            [0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75],
+            [0, 0.5, 1, 1.5],
+            [0, 0.25, 0.5, 1, 1.25, 1.5],
+            [0, 0.33, 0.66, 1, 1.33, 1.66]
+        ];
+
+        const hihatPattern = hihatPatterns[Math.floor(this.loopCount / 3) % hihatPatterns.length];
+
+        hihatPattern.forEach((timing, i) => {
             const hihat = this.context.createOscillator();
             const hihatGain = this.context.createGain();
             const hihatFilter = this.context.createBiquadFilter();
 
             hihat.type = 'square';
-            hihat.frequency.setValueAtTime(8000, now + i * 0.25);
+            hihat.frequency.setValueAtTime(7000 + Math.random() * 2000, now + timing);
 
             hihatFilter.type = 'highpass';
-            hihatFilter.frequency.setValueAtTime(5000, now + i * 0.25);
+            hihatFilter.frequency.setValueAtTime(6000, now + timing);
 
-            hihatGain.gain.setValueAtTime(0, now + i * 0.25);
-            hihatGain.gain.linearRampToValueAtTime(0.01, now + i * 0.25 + 0.01);
-            hihatGain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.25 + 0.08);
+            const isAccent = i % 2 === 0;
+            hihatGain.gain.setValueAtTime(0, now + timing);
+            hihatGain.gain.linearRampToValueAtTime(isAccent ? 0.012 : 0.006, now + timing + 0.005);
+            hihatGain.gain.exponentialRampToValueAtTime(0.001, now + timing + 0.06);
 
             hihat.connect(hihatFilter);
             hihatFilter.connect(hihatGain);
             hihatGain.connect(this.masterGain);
 
-            hihat.start(now + i * 0.25);
-            hihat.stop(now + i * 0.25 + 0.08);
+            hihat.start(now + timing);
+            hihat.stop(now + timing + 0.06);
+        });
+
+        // Add occasional melodic "ping" for variety
+        if (this.loopCount % 4 === 0) {
+            setTimeout(() => {
+                const ping = this.context.createOscillator();
+                const pingGain = this.context.createGain();
+                const pingTime = this.context.currentTime;
+
+                ping.type = 'sine';
+                ping.frequency.setValueAtTime(currentChord[2] * 2, pingTime);
+
+                pingGain.gain.setValueAtTime(0.015, pingTime);
+                pingGain.gain.exponentialRampToValueAtTime(0.001, pingTime + 0.3);
+
+                ping.connect(pingGain);
+                pingGain.connect(this.masterGain);
+
+                ping.start(pingTime);
+                ping.stop(pingTime + 0.3);
+            }, 1000);
         }
 
-        // Schedule next loop
-        setTimeout(() => this.playBackgroundLoop(), 1800);
+        // Varied loop timing
+        const nextLoopDelay = 1800 + (this.loopCount % 3) * 200;
+        setTimeout(() => this.playBackgroundLoop(), nextLoopDelay);
     }
 
     stopBackgroundMusic() {
