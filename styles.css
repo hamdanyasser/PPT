@@ -12,6 +12,18 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    perspective: 1000px;
+}
+
+/* =================== PARTICLE CANVAS =================== */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
 }
 
 /* =================== VIDEO CONTROLS =================== */
@@ -123,7 +135,7 @@ body {
 
 /* =================== SECTION 1: العنوان =================== */
 .section-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     color: white;
     text-align: center;
     padding: 4rem 2rem;
@@ -131,10 +143,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .header-content {
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .main-title {
@@ -142,15 +174,34 @@ body {
     font-weight: 800;
     margin: 2rem 0 1.5rem;
     line-height: 1.4;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    text-shadow:
+        0 0 20px rgba(255, 255, 255, 0.5),
+        0 0 40px rgba(255, 215, 0, 0.3),
+        2px 2px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale(0.8) rotateX(-15deg);
     transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
+    animation: textPulse 2s ease-in-out infinite;
 }
 
 .section.active .main-title {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) rotateX(0deg);
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        text-shadow:
+            0 0 20px rgba(255, 255, 255, 0.5),
+            0 0 40px rgba(255, 215, 0, 0.3),
+            2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    50% {
+        text-shadow:
+            0 0 30px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(255, 215, 0, 0.5),
+            2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
 }
 
 .subtitle {
@@ -329,7 +380,14 @@ body {
 
 .lightning {
     font-size: 3rem;
-    animation: pulse-glow 2s ease-in-out infinite;
+    animation: pulse-glow 2s ease-in-out infinite, rotate-shake 0.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ffff00);
+}
+
+@keyframes rotate-shake {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
 }
 
 .vs-text {
@@ -380,32 +438,42 @@ body {
     text-align: center;
     min-height: 300px;
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(40px) rotateX(-20deg);
     transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
 }
 
 .section.active .brain-card {
-    animation: cardSlideIn 0.8s ease 0.4s forwards;
+    animation: cardSlideIn 0.8s ease 0.4s forwards, cardFloat 3s ease-in-out 1.2s infinite;
 }
 
 .section.active .tech-card {
-    animation: cardSlideIn 0.8s ease 0.6s forwards;
+    animation: cardSlideIn 0.8s ease 0.6s forwards, cardFloat 3s ease-in-out 1.4s infinite;
 }
 
 @keyframes cardSlideIn {
     from {
         opacity: 0;
-        transform: translateY(40px);
+        transform: translateY(40px) rotateX(-20deg);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) rotateX(0deg);
+    }
+}
+
+@keyframes cardFloat {
+    0%, 100% {
+        transform: translateY(0) rotateX(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotateX(2deg);
     }
 }
 
 .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
 .brain-card {
@@ -624,11 +692,28 @@ body {
 
 /* =================== SECTION 5: الخاتمة =================== */
 .section-conclusion {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
     padding: 4rem 2rem;
     text-align: center;
     position: relative;
     overflow: hidden;
+}
+
+.section-conclusion::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(102, 126, 234, 0.3) 0%, transparent 50%);
+    animation: pulseBackground 4s ease-in-out infinite;
+}
+
+@keyframes pulseBackground {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.8; }
 }
 
 .conclusion-content {
