@@ -12,6 +12,8 @@ const progressContainer = document.querySelector('.progress-bar-container');
 const currentTimeDisplay = document.getElementById('currentTime');
 const totalTimeDisplay = document.getElementById('totalTime');
 
+console.log('Video.js loaded, found', sections.length, 'sections');
+
 // =================== STATE ===================
 let currentSectionIndex = 0;
 let isPlaying = false;
@@ -128,13 +130,21 @@ function nextSection() {
 }
 
 function showSection(index) {
+    console.log('showSection called with index:', index);
+    console.log('Total sections found:', sections.length);
+
     // Remove active class from all sections
     sections.forEach(section => {
         section.classList.remove('active');
     });
 
     // Add active class to current section
-    sections[index].classList.add('active');
+    if (sections[index]) {
+        sections[index].classList.add('active');
+        console.log('Added active class to section', index, sections[index]);
+    } else {
+        console.error('Section not found at index', index);
+    }
     currentSectionIndex = index;
 
     // Play transition sound
