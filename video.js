@@ -45,14 +45,12 @@ function init() {
         });
     }
 
-    // Auto-play on load
-    setTimeout(() => {
-        play();
-    }, 500);
+    // Don't auto-play - wait for user to click play button
+    // This allows AudioContext to initialize properly
 }
 
 // =================== PLAYBACK FUNCTIONS ===================
-function play() {
+async function play() {
     if (isPlaying) return;
 
     isPlaying = true;
@@ -65,9 +63,9 @@ function play() {
         startTime = Date.now() - pausedTime;
     }
 
-    // Start background music
+    // Resume AudioContext on user gesture
     if (window.audioEngine) {
-        window.audioEngine.startBackgroundMusic();
+        await window.audioEngine.resume();
     }
 
     updateProgress();
