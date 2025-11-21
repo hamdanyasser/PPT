@@ -12,7 +12,6 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
-    perspective: 1000px;
 }
 
 /* =================== PARTICLE CANVAS =================== */
@@ -91,6 +90,7 @@ body {
     height: 100vh;
     position: relative;
     overflow: hidden;
+    background: #000;
 }
 
 /* =================== SECTION STYLING =================== */
@@ -108,15 +108,13 @@ body {
     padding-bottom: 120px;
     opacity: 0;
     visibility: hidden;
-    transform: scale(0.9);
-    transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
     z-index: 10;
 }
 
 .section.active {
     opacity: 1;
     visibility: visible;
-    transform: scale(1);
 }
 
 .section.animate-in {
@@ -180,9 +178,7 @@ body {
         0 0 40px rgba(255, 215, 0, 0.3),
         2px 2px 8px rgba(0, 0, 0, 0.3);
     opacity: 0;
-    transform: scale(0.8) rotateX(-15deg);
-    transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s;
-    animation: textPulse 2s ease-in-out infinite;
+    transition: opacity 0.8s ease 0.6s;
 }
 
 .section.active .main-title {
@@ -381,8 +377,7 @@ body {
 
 .lightning {
     font-size: 3rem;
-    animation: pulse-glow 2s ease-in-out infinite, rotate-shake 0.5s ease-in-out infinite;
-    filter: drop-shadow(0 0 20px #ffd700) drop-shadow(0 0 40px #ffff00);
+    filter: drop-shadow(0 0 20px #ffd700);
 }
 
 @keyframes rotate-shake {
@@ -445,11 +440,11 @@ body {
 }
 
 .section.active .brain-card {
-    animation: cardSlideIn 0.8s ease 0.4s forwards, cardFloat 3s ease-in-out 1.2s infinite;
+    animation: cardSlideIn 0.8s ease 0.4s forwards;
 }
 
 .section.active .tech-card {
-    animation: cardSlideIn 0.8s ease 0.6s forwards, cardFloat 3s ease-in-out 1.4s infinite;
+    animation: cardSlideIn 0.8s ease 0.6s forwards;
 }
 
 @keyframes cardSlideIn {
