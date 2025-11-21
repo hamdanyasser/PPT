@@ -139,7 +139,8 @@ body {
     color: white;
     text-align: center;
     padding: 4rem 2rem;
-    min-height: 500px;
+    min-height: 100vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -398,6 +399,8 @@ body {
 .section-comparison {
     padding: 3rem 2rem;
     background: linear-gradient(180deg, #f5f7fa 0%, #e8eef5 50%, #f0f4f8 100%);
+    min-height: 100vh;
+    width: 100%;
 }
 
 .section-title {
@@ -716,11 +719,13 @@ body {
 
 /* =================== SECTION 5: الخاتمة =================== */
 .section-conclusion {
-    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%) !important;
     padding: 4rem 2rem;
     text-align: center;
     position: relative;
     overflow: hidden;
+    min-height: 100vh;
+    width: 100%;
 }
 
 .section-conclusion::before {
